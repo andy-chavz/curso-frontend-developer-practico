@@ -3,7 +3,7 @@ const desktopMenu = document.querySelector ('.desktop-menu');
 const menuHamburguesa = document.querySelector ('.menu');
 const mobileMenu = document.querySelector ('.mobile-menu');
 const menuCarritoIcon = document.querySelector ('.navbar-shopping-cart');
-const aside = document.querySelector ('.product-detail');
+const shoppingCartContainer = document.querySelector ('#shoppingCartContainer');
 const cardsContainer = document.querySelector ('.cards-container');
 
 menuEmail.addEventListener('click', toggleDesktopMenu);
@@ -11,19 +11,19 @@ menuHamburguesa.addEventListener ('click', toggleMobileMenu);
 menuCarritoIcon.addEventListener ('click', toggleCarritoAside);
 /*Esta funcion la hiciste para que se cierre el aside si picas el desktopmenu (dandole click al correo)*/
  function toggleDesktopMenu(){
-    const isAsideClosed = aside.classList.contains('inactive');
+    const isAsideClosed = shoppingCartContainer.classList.contains('inactive');
      
         if (!isAsideClosed){
-            aside.classList.add ('inactive');
+            shoppingCartContainer.classList.add ('inactive');
         }
     desktopMenu.classList.toggle('inactive');
  }
  /*Esta funcion la hiciste para que se cierre el carrito si picas el menuHamburger*/
  function toggleMobileMenu(){
-    const isAsideClosed = aside.classList.contains('inactive');
+    const isAsideClosed = shoppingCartContainer.classList.contains('inactive');
      
         if (!isAsideClosed){
-            aside.classList.add ('inactive');
+            shoppingCartContainer.classList.add ('inactive');
         }
     mobileMenu.classList.toggle ('inactive');
  }
@@ -34,7 +34,7 @@ menuCarritoIcon.addEventListener ('click', toggleCarritoAside);
         if (!isMobileMenuClosed){
             mobileMenu.classList.add ('inactive');
         }
-    aside.classList.toggle ('inactive');
+        shoppingCartContainer.classList.toggle ('inactive');
     }
 
     const productList = [];
@@ -63,9 +63,17 @@ menuCarritoIcon.addEventListener ('click', toggleCarritoAside);
         price: 350,
         image:"https://images.pexels.com/photos/354962/pexels-photo-354962.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     });
+    productList.push ({
+        name: 'Hidratante facial',
+        price: 280,
+        image:"https://images.pexels.com/photos/6621355/pexels-photo-6621355.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    });
+    
 
 
-    /*<div class="product-card">
+    /* 
+    ?Así se ve lo que quieres maquetar en JS pero hecho en HTML
+     <div class="product-card">
     <img src="https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="">
     <div class="product-info">
       <div>
@@ -77,44 +85,45 @@ menuCarritoIcon.addEventListener ('click', toggleCarritoAside);
       </figure>
     </div>
   </div> */
-// Con la función vas a maquetar en JS lo que esta arriba en tu HTML original
+
+//!Con la función vas a maquetar en JS lo que esta arriba en tu HTML original
 function renderProducts (arr){
     for (product of arr){
-        const productCard = document.createElement('div');// creaste el primer div que contiene la estructura de la card
-        productCard.classList.add ('product-card');// le añadiste la clase product-card
+        const productCard = document.createElement('div');//* creaste el primer div que contiene la estructura de la card
+        productCard.classList.add ('product-card');//* le añadiste la clase product-card
  
-        const productImg = document.createElement ('img'); // creaste la imagen
-        productImg.setAttribute ('src',product.image); // Al atributo imagen le diste el valor de product.image de tu arreglo anterior.
+        const productImg = document.createElement ('img'); //* creaste la imagen
+        productImg.setAttribute ('src',product.image); //* Al atributo imagen le diste el valor de product.image de tu arreglo anterior.
         // product = {name,price,image} necesitamos product.image
  
-        const productInfo = document.createElement ('div');//Creaste el segundo div que contiene la info de la card es decir precio y nombre del producto
-        productInfo.classList.add ('product-info'); // le pusiste la clase product-info
+        const productInfo = document.createElement ('div');//*Creaste el segundo div que contiene la info de la card es decir precio y nombre del producto
+        productInfo.classList.add ('product-info'); //* le pusiste la clase product-info
  
-        const productInfoDiv = document.createElement ('div'); // este es el div que contiene el precio y la descripcion
-        const productPrice = document.createElement ('p'); // parrafo de precio
-        productPrice.innerText = '$' + product.price;//creaste el valor del precio concatenando el signo de pesos con el valor de product.price
-        const productName = document.createElement ('p'); // parrafo de nombre del producto
-        productName.innerText = product.name;// el nombre de producto que debe aparecer va ser el que este en product.name
+        const productInfoDiv = document.createElement ('div'); //* este es el div que contiene el precio y la descripcion
+        const productPrice = document.createElement ('p'); //* parrafo de precio
+        productPrice.innerText = '$' + product.price;//*creaste el valor del precio concatenando el signo de pesos con el valor de product.price
+        const productName = document.createElement ('p'); //* parrafo de nombre del producto
+        productName.innerText = product.name;//* el nombre de producto que debe aparecer va ser el que este en product.name
  
-        // Metiste dentro de el div product info el precio y el nombre (como hijos del div de product info)
+        //! Metiste dentro de el div product info el precio y el nombre (como hijos del div de product info)
          productInfoDiv.appendChild (productPrice); 
          productInfoDiv.appendChild (productName);
  
  
-        const productInfoFigure = document.createElement ('figure'); //Creaste el contenedor figure donde va la imagen del carrito
-        const productImgCart = document.createElement ('img'); // imagen del carrito
-        productImgCart.setAttribute ('src', './icons/bt_add_to_cart.svg'); // le pusiste de atributo el url donde se guarda la imagen
+        const productInfoFigure = document.createElement ('figure'); //*Creaste el contenedor figure donde va la imagen del carrito
+        const productImgCart = document.createElement ('img'); //* imagen del carrito
+        productImgCart.setAttribute ('src', './icons/bt_add_to_cart.svg'); //* le pusiste de atributo el url donde se guarda la imagen
  
-        productInfoFigure.appendChild (productImgCart); // Metiste la imagen como hijo de la figure
+        productInfoFigure.appendChild (productImgCart); //* Metiste la imagen como hijo de la figure
 
-        // Metiste la info del div (que tiene precio y nombre) y el contenedor de la imagen dentro del div que contiene toda la info de la card (product-info)
+       //! Metiste la info del div (que tiene precio y nombre) y el contenedor de la imagen dentro del div que contiene toda la info de la card (product-info)
         productInfo.appendChild(productInfoDiv);
         productInfo.appendChild(productInfoFigure);   
  
-        // Al div que contiene toda la card (product-card) le pusiste de hijo la imagen y la info del producto
+        //! Al div que contiene toda la card (product-card) le pusiste de hijo la imagen y la info del producto
         productCard.appendChild(productImg);
         productCard.appendChild(productInfo);
-        // Por último al div contenedor de todas las tarjetas (cards-container) le pones de hijo el div con la estructura de toda la card (product-card)
+        //* Por último al div contenedor de todas las tarjetas (cards-container) le pones de hijo el div con la estructura de toda la card (product-card)
         cardsContainer.appendChild (productCard);
  
      } 
