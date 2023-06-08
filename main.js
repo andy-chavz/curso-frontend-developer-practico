@@ -3,28 +3,36 @@ const desktopMenu = document.querySelector ('.desktop-menu');
 const menuHamburguesa = document.querySelector ('.menu');
 const mobileMenu = document.querySelector ('.mobile-menu');
 const menuCarritoIcon = document.querySelector ('.navbar-shopping-cart');
+const productDetailCloseIcon = document.querySelector ('.product-detail-close');
 const shoppingCartContainer = document.querySelector ('#shoppingCartContainer');
 const cardsContainer = document.querySelector ('.cards-container');
+const productDetailContainer = document.querySelector ('#productDetail');
+
 
 menuEmail.addEventListener('click', toggleDesktopMenu);
 menuHamburguesa.addEventListener ('click', toggleMobileMenu);
 menuCarritoIcon.addEventListener ('click', toggleCarritoAside);
+productDetailCloseIcon.addEventListener ('click',closeProductDetailAside);
+
 /*Esta funcion la hiciste para que se cierre el aside si picas el desktopmenu (dandole click al correo)*/
  function toggleDesktopMenu(){
     const isAsideClosed = shoppingCartContainer.classList.contains('inactive');
      
         if (!isAsideClosed){
             shoppingCartContainer.classList.add ('inactive');
-        }
+        }       
     desktopMenu.classList.toggle('inactive');
  }
+
  /*Esta funcion la hiciste para que se cierre el carrito si picas el menuHamburger*/
  function toggleMobileMenu(){
+
     const isAsideClosed = shoppingCartContainer.classList.contains('inactive');
      
         if (!isAsideClosed){
             shoppingCartContainer.classList.add ('inactive');
         }
+        closeProductDetailAside();
     mobileMenu.classList.toggle ('inactive');
  }
  /*Esta funcion la hiciste para que se cierre el menuHamburger si picas el carrito*/
@@ -34,8 +42,28 @@ menuCarritoIcon.addEventListener ('click', toggleCarritoAside);
         if (!isMobileMenuClosed){
             mobileMenu.classList.add ('inactive');
         }
+        const isProductDetailClosed = productDetailContainer.classList.contains('inactive');
+     
+        if (!isProductDetailClosed){
+            productDetailContainer.classList.add ('inactive');
+        }  
+        const isDesktopMenuClosed = desktopMenu.classList.contains ('inactive');
+
+        if (!isDesktopMenuClosed) {
+            desktopMenu.classList.add('inactive');
+        }        
+
+
         shoppingCartContainer.classList.toggle ('inactive');
+
     }
+function openProductDetailAside (){
+    shoppingCartContainer.classList.add ('inactive');
+    productDetailContainer.classList.remove ('inactive');
+}
+function closeProductDetailAside (){
+    productDetailContainer.classList.add ('inactive');
+}
 
     const productList = [];
     productList.push ({
@@ -69,9 +97,7 @@ menuCarritoIcon.addEventListener ('click', toggleCarritoAside);
         image:"https://images.pexels.com/photos/6621355/pexels-photo-6621355.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     });
     
-
-
-    /* 
+ /* 
     ?Así se ve lo que quieres maquetar en JS pero hecho en HTML
      <div class="product-card">
     <img src="https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="">
@@ -94,7 +120,7 @@ function renderProducts (arr){
  
         const productImg = document.createElement ('img'); //* creaste la imagen
         productImg.setAttribute ('src',product.image); //* Al atributo imagen le diste el valor de product.image de tu arreglo anterior.
-        // product = {name,price,image} necesitamos product.image
+        productImg.addEventListener('click', openProductDetailAside);
  
         const productInfo = document.createElement ('div');//*Creaste el segundo div que contiene la info de la card es decir precio y nombre del producto
         productInfo.classList.add ('product-info'); //* le pusiste la clase product-info
